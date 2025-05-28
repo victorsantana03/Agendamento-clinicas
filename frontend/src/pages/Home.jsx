@@ -1,60 +1,17 @@
-import axios from "axios";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Professionals from "../components/Professionals";
+import Clinics from "../components/Clinics";
 
 const Home = () => {
-  const [clinics, setClinics] = useState([]);
   const [selectedClinic, setSelectedClinic] = useState();
-  const [ready, setReady] = useState(false);
-
-  useEffect(() => {
-    const getClinics = async () => {
-      try {
-        const response = await axios.get("/clinics");
-        const { data } = response;
-        setClinics(data);
-        setReady(true);
-      } catch (error) {
-        console.log("Erro ao buscas clientes", error);
-      }
-    };
-    getClinics();
-  }, [clinics]);
-
-  const selectClinicId = (clinicId) => {
-    setSelectedClinic(clinicId);
-    console.log(selectedClinic);
-  };
 
   return (
     <div>
-      {ready ? (
-        <>
-          <h1>Clínicas</h1>
-          <div>
-            <p>
-              Bem-vindo a página de gerenciamento de clínicas. Seleciona sua
-              clínica:
-            </p>
-            <div>
-              {clinics.map((clinic) => (
-                <div key={clinic._id}>
-                  <h2>{clinic.name}</h2>
-                  <p>Endereço: {clinic.adress}</p>
-                  <p>Especialidade: {clinic.especialty}</p>
-                  <button onClick={() => selectClinicId(clinic._id)}>
-                    Selecionar
-                  </button>
-                </div>
-              ))}
-            </div>
-          </div>
+      <>
+        <Clinics setSelectedClinic={setSelectedClinic} />
 
-          <Professionals clinicId={selectedClinic} />
-        </>
-      ) : (
-        <p>Servidor desligado :(</p>
-      )}
+        <Professionals clinicId={selectedClinic} />
+      </>
     </div>
   );
 };

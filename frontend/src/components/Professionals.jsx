@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import axios from "axios";
 
 const Professionals = ({ clinicId }) => {
   const [professionals, setProfessionals] = useState([]);
+  const [optionSelected, setOptionselected] = useState("");
 
   useEffect(() => {
     if (clinicId) {
@@ -13,6 +15,7 @@ const Professionals = ({ clinicId }) => {
           });
           const { data } = response;
           setProfessionals(data);
+
           console.log(data);
         } catch (error) {
           console.log("Erro ao buscar profissionais", error);
@@ -34,7 +37,7 @@ const Professionals = ({ clinicId }) => {
                 <p>Especialidade: {professional.especialty}</p>
                 <div>
                   <p>Agenda:</p>
-                  <select>
+                  <select onChange={(e) => setOptionselected(e.target.value)}>
                     {professional.agenda.map((slot, index) => (
                       <option key={index} value={slot}>
                         {slot}
@@ -42,7 +45,9 @@ const Professionals = ({ clinicId }) => {
                     ))}
                   </select>
                 </div>
-                <button>Agendar</button>
+                <Link to={`/agendas/${professional._id}/${optionSelected}`}>
+                  Agendar
+                </Link>
               </div>
             ))}
           </div>

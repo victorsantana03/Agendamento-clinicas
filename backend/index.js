@@ -4,6 +4,7 @@ import "dotenv/config";
 import { dbConnect } from "./db/connect.js";
 import clinicRoutes from "./routes/clinic/clinic.js";
 import professionalRoutes from "./routes/professional/professional.js";
+import userRoutes from "./routes/user/user.js";
 const { PORT } = process.env;
 
 const app = express();
@@ -12,6 +13,7 @@ app.use(cors());
 
 app.use("/clinics", clinicRoutes);
 app.use("/professionals", professionalRoutes);
+app.use("/users", userRoutes);
 
 const startServer = async () => {
   try {
