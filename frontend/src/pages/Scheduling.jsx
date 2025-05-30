@@ -1,29 +1,64 @@
 import axios from "axios";
-import React, { useEffect } from "react";
-import { useParams } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Navigate, useParams } from "react-router-dom";
 
-const Scheduling = () => {
+const Scheduling = ({ user }) => {
   const { id } = useParams();
   const { slot } = useParams();
-  console.log(id, slot);
+  const { date } = useParams();
+  const dateFormated = new Date(date).toLocaleDateString("pt-BR");
+
+  const [clinic, setClinic] = useState({});
+  const [professional, setProfessional] = useState({});
+  const [redirect, setRedirect] = useState(false);
 
   useEffect(() => {
     const getScheduling = async () => {
       try {
-        const response = await axios.get(`/schedules/${id}/${slot}`);
-      } catch (error) {}
+        const response = await axios.get(`/schedule/${id}`);
+        const { data } = response;
+        setClinic(data.clinic);
+        setProfessional(data.professional);
+      } catch (error) {
+        console.error("Erro ao buscar agendamento", error);
+      }
     };
-  }, [id || slot]);
+
+    getScheduling();
+  }, []);
+
+  const handleSubmit = async () => {
+    try {
+      const response = await axios.post("/schedule", {
+        userId: user._id,
+        professionalId: id,
+        date,
+        slot,
+      });
+      const { data } = response;
+      console.log(data);
+      alert(data.message);
+      if (data.message === "Agendamento confirmado!") {
+        setRedirect(true);
+      }
+    } catch (error) {
+      console.error("Erro ao confirmar agendamento!", error);
+    }
+  };
 
   return (
     <div>
+      {redirect && <Navigate to={`/agendas/${user._id}`} />}
       <h1>Agendamento</h1>
       <div>
-        <h2>Nome Especialista</h2>
-        <h3>Especialidade</h3>
-        <p>Horario</p>
-        <p>Nome e endereço da clinica</p>
-        <button>Confirmar</button>
+        <h2>{professional.name}</h2>
+        <h3>{professional.especialty}</h3>
+        <p>{dateFormated}</p>
+        <p>{slot}</p>
+        <p>
+          {clinic.name}: {clinic.adress}
+        </p>
+        <button onClick={handleSubmit}>Confirmar</button>
       </div>
     </div>
   );

@@ -5,6 +5,7 @@ import { dbConnect } from "./db/connect.js";
 import clinicRoutes from "./routes/clinic/clinic.js";
 import professionalRoutes from "./routes/professional/professional.js";
 import userRoutes from "./routes/user/user.js";
+import scheduleRoutes from "./routes/schedule/schedule.js";
 const { PORT } = process.env;
 
 const app = express();
@@ -13,7 +14,8 @@ app.use(cors());
 
 app.use("/clinics", clinicRoutes);
 app.use("/professionals", professionalRoutes);
-app.use("/users", userRoutes);
+app.use("/user", userRoutes);
+app.use("/schedule", scheduleRoutes);
 
 const startServer = async () => {
   try {

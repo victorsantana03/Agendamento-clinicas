@@ -4,7 +4,8 @@ import axios from "axios";
 
 const Professionals = ({ clinicId }) => {
   const [professionals, setProfessionals] = useState([]);
-  const [optionSelected, setOptionselected] = useState("");
+  const [optionSelected, setOptionselected] = useState({});
+  const [dateSelected, setDateSeleceted] = useState("");
 
   useEffect(() => {
     if (clinicId) {
@@ -37,15 +38,50 @@ const Professionals = ({ clinicId }) => {
                 <p>Especialidade: {professional.especialty}</p>
                 <div>
                   <p>Agenda:</p>
-                  <select onChange={(e) => setOptionselected(e.target.value)}>
-                    {professional.agenda.map((slot, index) => (
-                      <option key={index} value={slot}>
-                        {slot}
+                  <div>
+                    <input
+                      type="date"
+                      value={dateSelected}
+                      onChange={(e) => setDateSeleceted(e.target.value)}
+                    />
+                    <select
+                      value={optionSelected[professional._id] || ""}
+                      onChange={(e) =>
+                        setOptionselected((prev) => ({
+                          ...prev,
+                          [professional._id]: e.target.value,
+                        }))
+                      }
+                    >
+                      <option value="" disabled>
+                        Selecione um horário
                       </option>
-                    ))}
-                  </select>
+                      {professional.agenda.map((slot, index) => (
+                        <option key={index} value={slot}>
+                          {slot}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
                 </div>
-                <Link to={`/agendas/${professional._id}/${optionSelected}`}>
+                <Link
+                  to={
+                    optionSelected[professional._id] && dateSelected
+                      ? `/agendas/${professional._id}/${
+                          optionSelected[professional._id]
+                        }/${dateSelected}`
+                      : "#"
+                  }
+                  onClick={(e) => {
+                    if (!optionSelected[professional._id] || !dateSelected) {
+                      e.preventDefault();
+                      alert(
+                        "Por favor, verifique se o horário e data foram preenchidos."
+                      );
+                      return;
+                    }
+                  }}
+                >
                   Agendar
                 </Link>
               </div>
@@ -53,9 +89,7 @@ const Professionals = ({ clinicId }) => {
           </div>
         </div>
       ) : (
-        <div>
-          <h2>Selecione uma clínica para visualizar os especialistas</h2>
-        </div>
+        <></>
       )}
     </div>
   );

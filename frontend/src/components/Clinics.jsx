@@ -2,7 +2,7 @@ import React from "react";
 import axios from "axios";
 import { useEffect, useState } from "react";
 
-const Clinics = ({ setSelectedClinic }) => {
+const Clinics = ({ setSelectedClinic, user }) => {
   const [clinics, setClinics] = useState([]);
   const [ready, setReady] = useState(false);
 
@@ -33,18 +33,22 @@ const Clinics = ({ setSelectedClinic }) => {
               Bem-vindo a página de gerenciamento de clínicas. Seleciona sua
               clínica:
             </p>
-            <div>
-              {clinics.map((clinic) => (
-                <div key={clinic._id}>
-                  <h2>{clinic.name}</h2>
-                  <p>Endereço: {clinic.adress}</p>
-                  <p>Especialidade: {clinic.especialty}</p>
-                  <button onClick={() => selectClinicId(clinic._id)}>
-                    Selecionar
-                  </button>
-                </div>
-              ))}
-            </div>
+            {user ? (
+              <div>
+                {clinics.map((clinic) => (
+                  <div key={clinic._id}>
+                    <h2>{clinic.name}</h2>
+                    <p>Endereço: {clinic.adress}</p>
+                    <p>Especialidade: {clinic.especialty}</p>
+                    <button onClick={() => selectClinicId(clinic._id)}>
+                      Selecionar
+                    </button>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <p>Faça login para ter acesso aos nossos serviços!</p>
+            )}
           </div>
         </>
       ) : (
