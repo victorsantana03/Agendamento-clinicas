@@ -26,13 +26,14 @@ const Scheduling = ({ user }) => {
 
     getScheduling();
   }, []);
-
+  console.log(clinic);
   const handleSubmit = async () => {
     try {
       const response = await axios.post("/schedule", {
         userId: user._id,
         professionalId: id,
-        date,
+        clinicId: clinic._id,
+        date: dateFormated,
         slot,
       });
       const { data } = response;

@@ -7,6 +7,11 @@ const scheduleSchema = new mongoose.Schema({
     ref: "Professional",
     require: true,
   },
+  clinicId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Clinic",
+    require: true,
+  },
   date: { type: String },
   slot: { type: String },
   status: {

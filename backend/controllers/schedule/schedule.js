@@ -30,9 +30,9 @@ export const getSchedule = async (req, res) => {
 
 //Adicionar agendamento
 export const addShedule = async (req, res) => {
-  const { userId, professionalId, date, slot } = req.body;
+  const { userId, professionalId, clinicId, date, slot } = req.body;
 
-  if (!userId || !professionalId || !date || !slot) {
+  if ((!userId || !professionalId || !date || !clinicId, !slot)) {
     res.json("Preencha todos os campos!");
   }
 
@@ -52,6 +52,7 @@ export const addShedule = async (req, res) => {
     const newSchedule = await Schedule.create({
       userId,
       professionalId,
+      clinicId,
       date,
       slot,
     });
@@ -65,17 +66,50 @@ export const addShedule = async (req, res) => {
   }
 };
 
-//Lista agendmentos do usuário
+//Lista agendamentos do usuário
 
 export const getSchedules = async (req, res) => {
   const { id } = req.params;
-  console.log(id);
+
   try {
     const schedules = await Schedule.find({ userId: id });
     if (schedules.length === 0) {
       return res.json("Nenhum agendamento encontrado!");
     }
-    res.json(schedules);
+    //BUSCA OS PROFISSIONAIS RELACIONADOS AOS AGENDAMENTOS
+    const professionalId = schedules.map((schedule) =>
+      schedule.professionalId.toString()
+    );
+    const professionals = await Professional.find({
+      _id: { $in: professionalId },
+    });
+
+    //BUSCA AS CLÍNICAS RELACIONADAS AOS AGENDAMENTOS
+    const clinicId = schedules.map((schedule) => schedule.clinicId.toString());
+    const clinics = await Clinic.find({ _id: { $in: clinicId } });
+
+    //PERCORRE OS AGENDAMENTOS E ASSOCIA OS PROFISSIONAIS E CLÍNICAS
+    const result = schedules.map((schedule) => {
+      const professional = professionals.find(
+        (prof) => prof._id.toString() === schedule.professionalId.toString()
+      );
+
+      const clinic = clinics.find(
+        (cli) => cli._id.toString() === schedule.clinicId.toString()
+      );
+
+      return {
+        _id: schedule._id,
+        userId: schedule.userId,
+        professional: professional,
+        clinic: clinic,
+        date: schedule.date,
+        slot: schedule.slot,
+        status: schedule.status,
+      };
+    });
+
+    res.json({ message: "Agendamentos encontrados!", schedules: result });
   } catch (error) {
     console.error("Erro ao listar agendamentos!", error);
     res.status(500).json("Erro ao listar agendamentos!");
