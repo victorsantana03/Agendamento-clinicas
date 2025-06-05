@@ -48,18 +48,25 @@ const Scheduling = ({ user }) => {
   };
 
   return (
-    <div>
+    <div className="h-screen bg-gray-400 p-10">
       {redirect && <Navigate to={`/agendas/${user._id}`} />}
-      <h1>Agendamento</h1>
-      <div>
-        <h2>{professional.name}</h2>
-        <h3>{professional.especialty}</h3>
-        <p>{dateFormated}</p>
-        <p>{slot}</p>
-        <p>
+      <h1 className="pb-10 text-3xl font-semibold">Agendamento</h1>
+      <div className="flex max-w-sm flex-col gap-5 rounded-2xl bg-gray-200 p-4 shadow-2xl">
+        <h2 className="text-xl">{professional.name}</h2>
+        <h3 className="text-lg">{professional.especialty}</h3>
+        <p className="text-lg font-semibold">{dateFormated}</p>
+        <p className="text-lg font-semibold">{slot}</p>
+        <p className="text-lg">
           {clinic.name}: {clinic.adress}
         </p>
-        <button onClick={handleSubmit}>Confirmar</button>
+        <div className="text-center">
+          <button
+            onClick={handleSubmit}
+            className="cursor-pointer rounded-lg bg-gray-600 px-4 py-2 text-gray-200"
+          >
+            Confirmar
+          </button>
+        </div>
       </div>
     </div>
   );

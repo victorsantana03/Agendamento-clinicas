@@ -6,12 +6,10 @@ const Home = ({ user }) => {
   const [selectedClinic, setSelectedClinic] = useState();
 
   return (
-    <div>
-      <>
-        <Clinics setSelectedClinic={setSelectedClinic} user={user} />
+    <div className="h-screen bg-gray-400">
+      <Clinics setSelectedClinic={setSelectedClinic} user={user} />
 
-        <Professionals clinicId={selectedClinic} />
-      </>
+      <Professionals clinicId={selectedClinic} />
     </div>
   );
 };

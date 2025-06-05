@@ -24,25 +24,35 @@ const Clinics = ({ setSelectedClinic, user }) => {
     setSelectedClinic(clinicId);
   };
   return (
-    <div>
+    <div className="p-10">
       {ready ? (
         <>
-          <h1>Clínicas</h1>
-          <div>
-            <p>
+          <h1 className="text-3xl font-semibold text-gray-800">Clínicas</h1>
+          <div className="pt-3">
+            <p className="pb-10 text-lg text-gray-800">
               Bem-vindo a página de gerenciamento de clínicas. Seleciona sua
               clínica:
             </p>
             {user ? (
-              <div>
+              <div className="grid grid-cols-[repeat(auto-fit,minmax(400px,1fr))] gap-5">
                 {clinics.map((clinic) => (
-                  <div key={clinic._id}>
-                    <h2>{clinic.name}</h2>
-                    <p>Endereço: {clinic.adress}</p>
-                    <p>Especialidade: {clinic.especialty}</p>
-                    <button onClick={() => selectClinicId(clinic._id)}>
-                      Selecionar
-                    </button>
+                  <div
+                    key={clinic._id}
+                    className="flex max-w-sm flex-col gap-5 rounded-2xl bg-gray-200 p-4 shadow-2xl"
+                  >
+                    <h2 className="text-xl font-semibold">{clinic.name}</h2>
+                    <p className="text-lg">Endereço: {clinic.adress}</p>
+                    <p className="text-lg">
+                      Especialidade: {clinic.especialty}
+                    </p>
+                    <div className="text-center">
+                      <button
+                        onClick={() => selectClinicId(clinic._id)}
+                        className="cursor-pointer rounded-lg bg-gray-600 px-4 py-2 text-gray-200"
+                      >
+                        Selecionar
+                      </button>
+                    </div>
                   </div>
                 ))}
               </div>

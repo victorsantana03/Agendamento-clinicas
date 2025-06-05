@@ -27,22 +27,29 @@ const Professionals = ({ clinicId }) => {
   }, [clinicId]);
 
   return (
-    <div>
+    <div className="p-10">
       {clinicId ? (
         <div>
-          <h2>Especialistas:</h2>
-          <div>
+          <h2 className="pb-10 text-3xl font-semibold">Especialistas:</h2>
+          <div className="grid grid-cols-[repeat(auto-fit,minmax(400px,1fr))] gap-5">
             {professionals.map((professional) => (
-              <div key={professional._id}>
-                <h3>Nome: {professional.name}</h3>
-                <p>Especialidade: {professional.especialty}</p>
-                <div>
+              <div
+                key={professional._id}
+                className="flex max-w-sm flex-col gap-5 rounded-2xl bg-gray-200 p-4 shadow-2xl"
+              >
+                <h3 className="text-xl">Nome: {professional.name}</h3>
+                <p className="text-lg">
+                  Especialidade: {professional.especialty}
+                </p>
+                <div className="flex flex-col gap-3">
                   <p>Agenda:</p>
-                  <div>
+                  <div className="flex gap-2">
                     <input
                       type="date"
                       value={dateSelected}
                       onChange={(e) => setDateSeleceted(e.target.value)}
+                      min={new Date().toISOString().split("T")[0]}
+                      className="cursor-pointer rounded-xl border border-gray-300 p-2"
                     />
                     <select
                       value={optionSelected[professional._id] || ""}
@@ -52,6 +59,7 @@ const Professionals = ({ clinicId }) => {
                           [professional._id]: e.target.value,
                         }))
                       }
+                      className="cursor-pointer rounded-xl border border-gray-300 p-2"
                     >
                       <option value="" disabled>
                         Selecione um horário
@@ -64,26 +72,29 @@ const Professionals = ({ clinicId }) => {
                     </select>
                   </div>
                 </div>
-                <Link
-                  to={
-                    optionSelected[professional._id] && dateSelected
-                      ? `/agendas/${professional._id}/${
-                          optionSelected[professional._id]
-                        }/${dateSelected}`
-                      : "#"
-                  }
-                  onClick={(e) => {
-                    if (!optionSelected[professional._id] || !dateSelected) {
-                      e.preventDefault();
-                      alert(
-                        "Por favor, verifique se o horário e data foram preenchidos."
-                      );
-                      return;
+                <div className="text-center">
+                  <Link
+                    to={
+                      optionSelected[professional._id] && dateSelected
+                        ? `/agendas/${professional._id}/${
+                            optionSelected[professional._id]
+                          }/${dateSelected}`
+                        : "#"
                     }
-                  }}
-                >
-                  Agendar
-                </Link>
+                    onClick={(e) => {
+                      if (!optionSelected[professional._id] || !dateSelected) {
+                        e.preventDefault();
+                        alert(
+                          "Por favor, verifique se o horário e data foram preenchidos.",
+                        );
+                        return;
+                      }
+                    }}
+                    className="cursor-pointer rounded-lg bg-gray-600 px-4 py-2 text-gray-200"
+                  >
+                    Agendar
+                  </Link>
+                </div>
               </div>
             ))}
           </div>

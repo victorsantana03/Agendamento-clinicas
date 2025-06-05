@@ -22,7 +22,7 @@ const Schedules = () => {
 
   console.log(schedules);
   return (
-    <div>
+    <div className="h-screen bg-gray-400 p-10">
       <h1>Agendas</h1>
       <div>
         {schedules.length === 0 ? (
