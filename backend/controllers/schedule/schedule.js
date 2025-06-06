@@ -67,7 +67,6 @@ export const addShedule = async (req, res) => {
 };
 
 //Lista agendamentos do usuário
-
 export const getSchedules = async (req, res) => {
   const { id } = req.params;
 
@@ -113,5 +112,52 @@ export const getSchedules = async (req, res) => {
   } catch (error) {
     console.error("Erro ao listar agendamentos!", error);
     res.status(500).json("Erro ao listar agendamentos!");
+  }
+};
+
+//Cancelar agendamento
+export const cancelSchedule = async (req, res) => {
+  const { scheduleId } = req.params;
+
+  if (!scheduleId) {
+    res.json({ message: "Id do agendamento não informado!" });
+    return;
+  }
+
+  const schedule = await Schedule.findById(scheduleId);
+  if (!schedule) {
+    res.json({ message: "Agendamento não encontrado!" });
+    return;
+  }
+
+  try {
+    schedule.status = "cancelado";
+    await schedule.save();
+    res.json({ message: "Agendamento cancelado com sucesso!" });
+  } catch (error) {
+    console.error("Erro ao cancelar agendamneto!", error);
+    res.json({ message: "Erro ao cancelar agendamento!" });
+  }
+};
+
+//Deletar agendamento
+export const deleteSchedule = async (req, res) => {
+  const { scheduleId } = req.params;
+
+  if (!scheduleId) {
+    res.json({ message: "Id do agendamento não informado!" });
+    return;
+  }
+
+  try {
+    const schedule = await Schedule.findByIdAndDelete(scheduleId);
+    if (!schedule) {
+      res.json({ message: "Agendamento não encontrado!" });
+      return;
+    }
+    res.json({ message: "Agendamento deletado com sucesso!" });
+  } catch (error) {
+    console.error("Erro ao deletar agendamento!", error);
+    res.status(500).json("Erro ao deletar agendamento!");
   }
 };

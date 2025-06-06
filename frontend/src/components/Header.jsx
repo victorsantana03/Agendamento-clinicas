@@ -17,10 +17,15 @@ const Header = ({ user }) => {
               Meus agendamentos
             </Link>
           </div>
+          {pathname !== "/" && (
+            <div className="text-xl text-white">
+              <Link to="/">Clínicas</Link>
+            </div>
+          )}
 
           <div className="flex items-center gap-2 text-lg text-gray-200">
             <FaUser />
-            <p>{user.email}</p>
+            <p className="hidden md:block">{user.email}</p>
           </div>
         </div>
       ) : (

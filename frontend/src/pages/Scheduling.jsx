@@ -26,7 +26,7 @@ const Scheduling = ({ user }) => {
 
     getScheduling();
   }, []);
-  console.log(clinic);
+
   const handleSubmit = async () => {
     try {
       const response = await axios.post("/schedule", {

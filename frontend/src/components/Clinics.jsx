@@ -24,7 +24,7 @@ const Clinics = ({ setSelectedClinic, user }) => {
     setSelectedClinic(clinicId);
   };
   return (
-    <div className="p-10">
+    <div className="px-5 py-10">
       {ready ? (
         <>
           <h1 className="text-3xl font-semibold text-gray-800">Clínicas</h1>
@@ -34,11 +34,11 @@ const Clinics = ({ setSelectedClinic, user }) => {
               clínica:
             </p>
             {user ? (
-              <div className="grid grid-cols-[repeat(auto-fit,minmax(400px,1fr))] gap-5">
+              <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
                 {clinics.map((clinic) => (
                   <div
                     key={clinic._id}
-                    className="flex max-w-sm flex-col gap-5 rounded-2xl bg-gray-200 p-4 shadow-2xl"
+                    className="flex min-h-[244px] w-72 flex-col gap-5 rounded-2xl bg-gray-200 p-4 shadow-2xl lg:w-sm"
                   >
                     <h2 className="text-xl font-semibold">{clinic.name}</h2>
                     <p className="text-lg">Endereço: {clinic.adress}</p>
