@@ -23,9 +23,19 @@ const Header = ({ user }) => {
             </div>
           )}
 
-          <div className="flex items-center gap-2 text-lg text-gray-200">
-            <FaUser />
-            <p className="hidden md:block">{user.email}</p>
+          <div className="flex items-center gap-10">
+            <div className="flex items-center gap-2 text-lg text-gray-200">
+              <FaUser />
+              <p className="hidden md:block">{user.email}</p>
+            </div>
+            <div>
+              <Link
+                to="/admin"
+                className={`${pathname === "/admin" ? "text-blue-500" : "text-gray-200"} cursor-pointer underline`}
+              >
+                Admin
+              </Link>
+            </div>
           </div>
         </div>
       ) : (

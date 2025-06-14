@@ -1,4 +1,7 @@
 import { User } from "../../models/user/user.js";
+import jwt from "jsonwebtoken";
+import "dotenv/config";
+const { SECRET_KEY, ADMIN_EMAIL, ADMIN_PASSWORD } = process.env;
 
 //CRIAR NOVO USUÁRIO
 export const createUser = async (req, res) => {
@@ -37,4 +40,16 @@ export const getUsers = async (req, res) => {
   } catch (error) {
     console.error("Erro ao listar usuários", error);
   }
+};
+
+//ACESSAR COMO ADMIN
+export const adminLogin = async (req, res) => {
+  const { email, password } = req.body;
+
+  if (email === ADMIN_EMAIL && password === ADMIN_PASSWORD) {
+    const token = jwt.sign({ role: "admin" }, SECRET_KEY, { expiresIn: "1d" });
+    return res.json({ token });
+  }
+
+  res.status(401).json({ message: "Credenciais inválidas" });
 };

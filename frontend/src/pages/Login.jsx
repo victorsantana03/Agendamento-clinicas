@@ -19,6 +19,9 @@ const Login = ({ setUser }) => {
       console.log("Erro ao fazer login", error);
     }
   };
+
+  //   if (user) return <Navigate to="/" />;
+
   return (
     <div>
       <div>

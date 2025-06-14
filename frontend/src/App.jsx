@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import Scheduling from "./pages/Scheduling";
 import Schedules from "./pages/Schedules";
 import Login from "./pages/Login";
+import Admin from "./pages/Admin";
 
 axios.defaults.baseURL = "http://localhost:3000";
 
@@ -36,6 +37,7 @@ function App() {
         />
         <Route path="/agendas/:id" element={<Schedules />} />
         <Route path="/user" element={<Login setUser={setUser} />} />
+        <Route path="/admin" element={<Admin />} />
       </Routes>
     </BrowserRouter>
   );
