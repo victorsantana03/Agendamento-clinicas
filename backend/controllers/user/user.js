@@ -48,7 +48,7 @@ export const adminLogin = async (req, res) => {
 
   if (email === ADMIN_EMAIL && password === ADMIN_PASSWORD) {
     const token = jwt.sign({ role: "admin" }, SECRET_KEY, { expiresIn: "1d" });
-    return res.json({ token });
+    return res.json({ message: "Acesso liberado!", token });
   }
 
   res.status(401).json({ message: "Credenciais inválidas" });

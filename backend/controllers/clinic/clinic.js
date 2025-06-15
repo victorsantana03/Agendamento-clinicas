@@ -22,7 +22,7 @@ export const createClinic = async (req, res) => {
   const clinicExists = await Clinic.find({ adress, especialty });
 
   if (clinicExists.length > 0) {
-    res.json("Clinica já cadastrada!");
+    res.json({ message: "Clínica ja existe!" });
     return;
   }
 
@@ -32,7 +32,7 @@ export const createClinic = async (req, res) => {
       adress,
       especialty,
     });
-    res.status(200).json(newClinic);
+    res.status(200).json({ message: "Clínica criada!", newClinic });
   } catch (error) {
     console.error("Falha ao criar nova clinica!", error);
   }
