@@ -3,7 +3,7 @@ import "dotenv/config";
 const { SECRET_KEY } = process.env;
 
 export function autenticarAdmin(req, res, next) {
-  const authHeader = req.headers.autorization;
+  const authHeader = req.headers.authorization;
   if (!authHeader) {
     return res.status(401).json({ erro: "Token ausente" });
   }
