@@ -18,11 +18,12 @@ const Clinics = ({ setSelectedClinic, user }) => {
       }
     };
     getClinics();
-  }, [clinics]);
+  }, []);
 
   const selectClinicId = (clinicId) => {
     setSelectedClinic(clinicId);
   };
+
   return (
     <div className="px-5 py-10">
       {ready ? (

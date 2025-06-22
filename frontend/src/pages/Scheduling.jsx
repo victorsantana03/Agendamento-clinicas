@@ -48,7 +48,7 @@ const Scheduling = ({ user }) => {
   };
 
   return (
-    <div className="h-screen bg-gray-400 p-10">
+    <div className="h-screen bg-gray-400 p-10 pt-20">
       {redirect && <Navigate to={`/agendas/${user._id}`} />}
       <h1 className="pb-10 text-3xl font-semibold">Agendamento</h1>
       <div className="flex max-w-sm flex-col gap-5 rounded-2xl bg-gray-200 p-4 shadow-2xl">

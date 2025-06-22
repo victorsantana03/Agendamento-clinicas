@@ -7,8 +7,7 @@ const Admin = () => {
   const [password, setPassword] = useState();
   const token = localStorage.getItem("token");
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const handleSubmit = async () => {
     try {
       const response = await axios.post("/user/admin/login", {
         email,
@@ -30,7 +29,7 @@ const Admin = () => {
     <div className="bg-gray-400">
       {!token ? (
         <div className="flex h-screen flex-col items-center justify-center text-gray-200">
-          <h1 className="pb-8 text-3xl font-bold">Login</h1>
+          <h1 className="pb-8 text-3xl font-bold">Admin</h1>
 
           <form
             className="flex w-[450px] flex-col gap-10 rounded-3xl border border-gray-500 p-10"

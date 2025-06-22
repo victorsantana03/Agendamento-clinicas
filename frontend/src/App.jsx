@@ -9,23 +9,21 @@ import Login from "./pages/Login";
 import Admin from "./pages/Admin";
 
 axios.defaults.baseURL = "http://localhost:3000";
+axios.defaults.withCredentials = true;
 
 function App() {
-  const [user, setUser] = useState([]);
+  const [user, setUser] = useState(null);
 
+  //RESGATA O USUARIO DO COOKIE
   useEffect(() => {
-    const getUser = async () => {
-      try {
-        const response = await axios.get("/user");
-        const { data } = response;
-        setUser(data[0]);
-      } catch (error) {
-        console.log("Erro ao buscar usuários", error);
-      }
+    const axiosGet = async () => {
+      const response = await axios.get("user/profile");
+      setUser(response.data);
     };
-    getUser();
-  }, []);
 
+    axiosGet();
+  }, []);
+  console.log(user);
   return (
     <BrowserRouter>
       <Header user={user} />

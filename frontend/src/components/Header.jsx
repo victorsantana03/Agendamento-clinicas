@@ -6,7 +6,7 @@ const Header = ({ user }) => {
   const { pathname } = useLocation();
   console.log(user);
   return (
-    <div className="bg-slate-800 px-10 py-5">
+    <div className="fixed w-full bg-slate-800 px-10 py-5">
       {user ? (
         <div className="flex items-center justify-between">
           <div className="text-xl text-gray-200 underline">

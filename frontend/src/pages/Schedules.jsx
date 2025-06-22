@@ -55,7 +55,7 @@ const Schedules = () => {
   };
 
   return (
-    <div className="h-screen bg-gray-400 p-10">
+    <div className="h-screen bg-gray-400 p-10 pt-30">
       <h1 className="pb-10 text-3xl font-semibold">Agendas</h1>
       <div className="grid grid-cols-3 gap-5">
         {schedules.length === 0 ? (

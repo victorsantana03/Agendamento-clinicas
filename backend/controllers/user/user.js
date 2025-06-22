@@ -1,44 +1,83 @@
 import { User } from "../../models/user/user.js";
 import jwt from "jsonwebtoken";
+import bcrypt from "bcrypt";
 import "dotenv/config";
 const { SECRET_KEY, ADMIN_EMAIL, ADMIN_PASSWORD } = process.env;
 
+const bcryptSalt = bcrypt.genSaltSync();
+
 //CRIAR NOVO USUÁRIO
 export const createUser = async (req, res) => {
-  const { name, email } = req.body;
+  const { name, email, password } = req.body;
 
-  if (!name || !email) {
-    res.json("Preencha todos os campos!");
+  if (!name || !email || !password) {
+    res.json({ message: "Preencha todos os campos!" });
     return;
   }
 
-  const userExist = await User.find({ email: email });
-  if (userExist.legnt > 0) {
-    res.json({ message: "Usário já cadastrado!" });
-    return;
-  }
+  const encryptedPassword = bcrypt.hashSync(password, bcryptSalt);
 
   try {
     const newUser = await User.create({
       name,
       email,
+      password: encryptedPassword,
     });
-    res.json({
-      message: "Usuário criado com sucesso!",
-      user: newUser,
-    });
+
+    const { _id } = newUser;
+    const newUserObj = { name, email, _id };
+    try {
+      const token = jwt.sign(newUserObj, SECRET_KEY, { expiresIn: "1d" });
+      res.cookie("token", token).json(newUserObj);
+    } catch (error) {
+      res.status(500).json("Erro ao assinar com o JWT", error);
+    }
   } catch (error) {
     console.error("erro ao criar usuário", error);
   }
 };
 
-//LISTAR USUÁRIO
-export const getUsers = async (req, res) => {
+//FAZER LOGIN
+
+// export const createUser = async (req, res) => {
+//   const { name, email, password } = req.body;
+
+//   if (!name || !email || !password) {
+//     res.json({ message: "Preencha todos os campos!" });
+//     return;
+//   }
+
+//   const userExist = await User.find({ email: email });
+//   if (userExist.legnt > 0) {
+//     res.json({ message: "Usário já cadastrado!" });
+//     return;
+//   }
+
+//   try {
+//     const newUser = await User.create({
+//       name,
+//       email,
+//     });
+//     res.json({
+//       message: "Usuário criado com sucesso!",
+//       user: newUser,
+//     });
+//   } catch (error) {
+//     console.error("erro ao criar usuário", error);
+//   }
+// };
+
+//BUSCAR USUÁRIO
+export const getUser = async (req, res) => {
+  const { token } = req.cookies;
+  if (!token) {
+    return res.status(401).json({ message: "Token não encontrado." });
+  }
   try {
-    const users = await User.find();
-    res.json(users);
+    const userJWT = jwt.verify(token, SECRET_KEY, {});
+    res.json(userJWT);
   } catch (error) {
-    console.error("Erro ao listar usuários", error);
+    console.error("Erro ao verificar token com JWT:", error);
   }
 };
 
