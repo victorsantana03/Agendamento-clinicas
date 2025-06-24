@@ -39,7 +39,9 @@ const Header = ({ user }) => {
           </div>
         </div>
       ) : (
-        <Link to="/user">Logar</Link>
+        <Link to="/user" className="text-gray-200">
+          Logar
+        </Link>
       )}
     </div>
   );

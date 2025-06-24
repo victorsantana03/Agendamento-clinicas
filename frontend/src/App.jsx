@@ -34,7 +34,7 @@ function App() {
           element={<Scheduling user={user} />}
         />
         <Route path="/agendas/:id" element={<Schedules />} />
-        <Route path="/user" element={<Login setUser={setUser} />} />
+        <Route path="/user" element={<Login setUser={setUser} user={user} />} />
         <Route path="/admin" element={<Admin />} />
       </Routes>
     </BrowserRouter>

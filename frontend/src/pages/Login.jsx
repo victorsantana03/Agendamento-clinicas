@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { Navigate } from "react-router-dom";
 
-const Login = ({ setUser }) => {
+const Login = ({ setUser, user }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [redirect, setRedirect] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -13,14 +15,16 @@ const Login = ({ setUser }) => {
         password,
       });
       const { data } = response;
-      alert(data.message);
       setUser(data);
+      setRedirect(true);
     } catch (error) {
-      console.log("Erro ao fazer login", error);
+      alert(`Deu um erro ao logar: ${error.response.data}`);
     }
   };
 
-  //   if (user) return <Navigate to="/" />;
+  if (redirect || user) {
+    return <Navigate to="/" />;
+  }
 
   return (
     <div className="h-screen bg-gray-400">
