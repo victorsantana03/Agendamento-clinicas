@@ -54,8 +54,6 @@ const Schedules = () => {
     }
   };
 
-  if (!user) return <Navigate to="/login" />;
-
   return (
     <div className="h-screen bg-gray-400 p-10 pt-30">
       <h1 className="pb-10 text-3xl font-semibold">Agendas</h1>
