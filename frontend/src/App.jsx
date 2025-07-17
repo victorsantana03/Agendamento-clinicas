@@ -7,6 +7,7 @@ import Scheduling from "./pages/Scheduling";
 import Schedules from "./pages/Schedules";
 import Login from "./pages/Login";
 import Admin from "./pages/Admin";
+import Register from "./pages/Register";
 
 axios.defaults.baseURL = "http://localhost:3000";
 axios.defaults.withCredentials = true;
@@ -24,6 +25,7 @@ function App() {
     axiosGet();
   }, []);
   console.log(user);
+
   return (
     <BrowserRouter>
       <Header user={user} />
@@ -33,8 +35,12 @@ function App() {
           path="/agendas/:id/:slot/:date"
           element={<Scheduling user={user} />}
         />
-        <Route path="/agendas/:id" element={<Schedules />} />
+        <Route path="/agendas/:id" element={<Schedules user={user} />} />
         <Route path="/user" element={<Login setUser={setUser} user={user} />} />
+        <Route
+          path="/register"
+          element={<Register setUser={setUser} user={user} />}
+        />
         <Route path="/admin" element={<Admin />} />
       </Routes>
     </BrowserRouter>

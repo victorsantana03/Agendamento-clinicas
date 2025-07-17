@@ -33,10 +33,10 @@ const AdminPostsClinic = () => {
   };
 
   return (
-    <div className="w-[400px]">
+    <div className="w-full max-w-[400px] px-3">
       <h1 className="pb-8 text-2xl font-bold">Cadastrar nova clínica:</h1>
       <form
-        className="flex w-[450px] flex-col gap-10 rounded-3xl border border-gray-500 p-5"
+        className="flex w-full flex-col gap-10 rounded-3xl border border-gray-500 p-5"
         onSubmit={handleClinic}
       >
         <div className="flex flex-col">

@@ -60,6 +60,11 @@ const Admin = () => {
                 Logar como Admin
               </button>
             </div>
+            <div>
+              <p className="text-center">
+                Entre como Admin para cadastrar clínicas e profissionais
+              </p>
+            </div>
           </form>
         </div>
       ) : (

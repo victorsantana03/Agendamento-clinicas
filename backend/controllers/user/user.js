@@ -11,7 +11,13 @@ export const createUser = async (req, res) => {
   const { name, email, password } = req.body;
 
   if (!name || !email || !password) {
-    res.json({ message: "Preencha todos os campos!" });
+    res.status(400).json("Preencha todos os campos!");
+    return;
+  }
+
+  const existingUser = await User.find({ email });
+  if (existingUser.length > 0) {
+    res.status(400).json("Usuário já cadastrado com esse email!");
     return;
   }
 
@@ -42,7 +48,7 @@ export const loginUser = async (req, res) => {
   const { email, password } = req.body;
 
   if (!email || !password) {
-    res.json({ message: "Preencha todos os campos!" });
+    res.status(400).json("Preencha todos os campos!");
     return;
   }
 
@@ -61,7 +67,7 @@ export const loginUser = async (req, res) => {
           res.status(500).json("Erro ao assinar com o JWT", error);
         }
       } else {
-        res.status(400).json("senha inválida");
+        res.status(400).json("Senha inválida");
       }
     } else {
       res.status(400).json("Usuário não encontrado");

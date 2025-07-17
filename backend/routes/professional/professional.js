@@ -1,3 +1,5 @@
+import { autenticarAdmin } from "../../middleware/autenticarAdmin.js";
+
 import express from "express";
 import {
   createProfessional,
@@ -6,7 +8,7 @@ import {
 
 const router = express.Router();
 
-router.post("/", createProfessional);
+router.post("/", autenticarAdmin, createProfessional);
 router.get("/", getProfessionals);
 
 export default router;

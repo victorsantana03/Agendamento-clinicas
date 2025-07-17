@@ -54,10 +54,12 @@ const Schedules = () => {
     }
   };
 
+  if (!user) return <Navigate to="/login" />;
+
   return (
     <div className="h-screen bg-gray-400 p-10 pt-30">
       <h1 className="pb-10 text-3xl font-semibold">Agendas</h1>
-      <div className="grid grid-cols-3 gap-5">
+      <div className="grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-3">
         {schedules.length === 0 ? (
           <>
             <p className="text-xl font-semibold text-gray-200">
@@ -69,7 +71,7 @@ const Schedules = () => {
             {schedules.map((schedule) => (
               <div
                 key={schedule._id}
-                className="flex max-w-sm flex-col gap-5 rounded-2xl bg-gray-200 p-4 shadow-2xl"
+                className="flex w-full max-w-sm flex-col gap-5 rounded-2xl bg-gray-200 p-4 shadow-2xl"
               >
                 <div className="flex justify-between">
                   <div>

@@ -47,6 +47,8 @@ const Scheduling = ({ user }) => {
     }
   };
 
+  if (!user) return <Navigate to="/user" />;
+
   return (
     <div className="h-screen bg-gray-400 p-10 pt-20">
       {redirect && <Navigate to={`/agendas/${user._id}`} />}
