@@ -1,19 +1,22 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import axios from "axios";
 import Home from "./pages/Home";
 import Header from "./components/Header";
-import { useEffect, useState } from "react";
 import Scheduling from "./pages/Scheduling";
 import Schedules from "./pages/Schedules";
 import Login from "./pages/Login";
 import Admin from "./pages/Admin";
 import Register from "./pages/Register";
 
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { useEffect } from "react";
+import axios from "axios";
+
+import { useUserStore } from "./store/user.js";
+
 axios.defaults.baseURL = "http://localhost:3000";
 axios.defaults.withCredentials = true;
 
 function App() {
-  const [user, setUser] = useState(null);
+  const { setUser } = useUserStore();
 
   //RESGATA O USUARIO DO COOKIE
   useEffect(() => {
@@ -24,23 +27,16 @@ function App() {
 
     axiosGet();
   }, []);
-  console.log(user);
 
   return (
     <BrowserRouter>
-      <Header user={user} />
+      <Header />
       <Routes>
-        <Route path="/" element={<Home user={user} />} />
-        <Route
-          path="/agendas/:id/:slot/:date"
-          element={<Scheduling user={user} />}
-        />
-        <Route path="/agendas/:id" element={<Schedules user={user} />} />
-        <Route path="/user" element={<Login setUser={setUser} user={user} />} />
-        <Route
-          path="/register"
-          element={<Register setUser={setUser} user={user} />}
-        />
+        <Route path="/" element={<Home />} />
+        <Route path="/agendas/:id/:slot/:date" element={<Scheduling />} />
+        <Route path="/agendas/:id" element={<Schedules />} />
+        <Route path="/user" element={<Login />} />
+        <Route path="/register" element={<Register />} />
         <Route path="/admin" element={<Admin />} />
       </Routes>
     </BrowserRouter>

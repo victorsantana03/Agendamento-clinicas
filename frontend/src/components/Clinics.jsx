@@ -1,10 +1,13 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { GoAlert } from "react-icons/go";
+import { useUserStore } from "../store/user.js";
 
-const Clinics = ({ setSelectedClinic, user }) => {
+const Clinics = ({ setSelectedClinic }) => {
   const [clinics, setClinics] = useState([]);
   const [ready, setReady] = useState(false);
+
+  const { user } = useUserStore();
 
   useEffect(() => {
     const getClinics = async () => {

@@ -1,8 +1,9 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Navigate, useParams } from "react-router-dom";
+import { useUserStore } from "../store/user.js";
 
-const Scheduling = ({ user }) => {
+const Scheduling = () => {
   const { id } = useParams();
   const { slot } = useParams();
   const { date } = useParams();
@@ -11,6 +12,7 @@ const Scheduling = ({ user }) => {
   const [clinic, setClinic] = useState({});
   const [professional, setProfessional] = useState({});
   const [redirect, setRedirect] = useState(false);
+  const { user } = useUserStore();
 
   useEffect(() => {
     const getScheduling = async () => {

@@ -1,10 +1,13 @@
 import { Link } from "react-router-dom";
 import { FaUser } from "react-icons/fa";
 import { useLocation } from "react-router-dom";
+import { useUserStore } from "../store/user.js";
 
-const Header = ({ user }) => {
+const Header = () => {
   const { pathname } = useLocation();
-  console.log(user);
+
+  const { user } = useUserStore();
+
   return (
     <div className="fixed w-full bg-slate-800 px-5 py-5 md:px-10">
       {user ? (

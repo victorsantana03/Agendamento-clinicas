@@ -1,11 +1,14 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { Link, Navigate } from "react-router-dom";
+import { useUserStore } from "../store/user.js";
 
-const Login = ({ setUser, user }) => {
+const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [redirect, setRedirect] = useState(false);
+
+  const { user, setUser } = useUserStore();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
