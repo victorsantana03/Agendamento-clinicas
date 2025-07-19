@@ -28,9 +28,13 @@ const Professionals = ({ clinicId }) => {
 
   return (
     <div className="p-10">
-      {clinicId ? (
+      <h2 className="pb-10 text-3xl font-semibold">Especialistas:</h2>
+      {professionals.length === 0 ? (
         <div>
-          <h2 className="pb-10 text-3xl font-semibold">Especialistas:</h2>
+          <p>Selecione uma clínica</p>
+        </div>
+      ) : (
+        <div>
           <div className="grid grid-cols-[repeat(auto-fit,minmax(400px,1fr))] gap-5">
             {professionals.map((professional) => (
               <div
@@ -99,8 +103,6 @@ const Professionals = ({ clinicId }) => {
             ))}
           </div>
         </div>
-      ) : (
-        <></>
       )}
     </div>
   );

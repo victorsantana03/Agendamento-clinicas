@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { GoAlert } from "react-icons/go";
 import { useUserStore } from "../store/user.js";
 
-const Clinics = ({ setSelectedClinic }) => {
+const Clinics = ({ setSelectedClinic, selectedClinic }) => {
   const [clinics, setClinics] = useState([]);
   const [ready, setReady] = useState(false);
 
@@ -22,10 +22,6 @@ const Clinics = ({ setSelectedClinic }) => {
     };
     getClinics();
   }, []);
-
-  const selectClinicId = (clinicId) => {
-    setSelectedClinic(clinicId);
-  };
 
   return (
     <div className="bg-gray-400 px-5 py-10">
@@ -54,8 +50,8 @@ const Clinics = ({ setSelectedClinic }) => {
                       </p>
                       <div className="text-center">
                         <button
-                          onClick={() => selectClinicId(clinic._id)}
-                          className="cursor-pointer rounded-lg bg-gray-600 px-4 py-2 text-gray-200"
+                          onClick={() => setSelectedClinic(clinic._id)}
+                          className={`${selectedClinic === clinic._id ? "bg-slate-800" : "bg-gray-500"} cursor-pointer rounded-lg px-4 py-2 text-gray-200`}
                         >
                           Selecionar
                         </button>

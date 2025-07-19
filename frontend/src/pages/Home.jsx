@@ -7,7 +7,10 @@ const Home = () => {
 
   return (
     <div className="min-h-screen bg-gray-400 pt-20">
-      <Clinics setSelectedClinic={setSelectedClinic} />
+      <Clinics
+        setSelectedClinic={setSelectedClinic}
+        selectedClinic={selectedClinic}
+      />
 
       <Professionals clinicId={selectedClinic} />
     </div>
